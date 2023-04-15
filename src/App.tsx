@@ -44,12 +44,7 @@ function Terrain(){
   });
 
   const mesh = useRef<Mesh>(null!);
-  useEffect(() => {
-    mesh.current.geometry.setAttribute(
-      "uv2",
-      new BufferAttribute(mesh.current.geometry.attributes.uv.array, 2)
-    );
-  });
+  
   
   return(
     <Plane args={[10,10,128,128]} rotation-x={-Math.PI / 2} ref={mesh}>
