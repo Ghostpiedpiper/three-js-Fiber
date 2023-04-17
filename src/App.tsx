@@ -4,7 +4,7 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { BufferAttribute, LinearEncoding, Mesh, PointLight, PointLightHelper, Vector2} from 'three'
-import { OrbitControls, PerspectiveCamera, Plane, Point, useHelper, useTexture } from '@react-three/drei'
+import { Environment, OrbitControls, PerspectiveCamera, Plane, Point, useEnvironment, useHelper, useTexture } from '@react-three/drei'
 import { useControls } from "leva";
 
 
@@ -18,6 +18,8 @@ function Terrain(){
     normalMap:'./textures/aerial_rocks_02_nor_gl_4k.jpg',
     alphaMap:'./textures/alpha.png',
   });
+
+
 
   const {displacementScale,aoMapIntensity,roughness,metalness,normalScale} = useControls({
     displacementScale:{
@@ -64,7 +66,7 @@ function Terrain(){
 }
 
 function ThreeContent(){
-
+  const envMap = useEnvironment({files:"./textures/clarens_night_02_4k.hdr"});
   const lightRef = useRef<PointLight>(null!);
   useHelper(lightRef,PointLightHelper,1,"red");
   return(
@@ -73,6 +75,7 @@ function ThreeContent(){
       <pointLight ref={lightRef} position={[5,5,0]} intensity={2} />
       <OrbitControls />
       <Terrain />
+      <Environment map={envMap} background />
     </>
     );
 }
